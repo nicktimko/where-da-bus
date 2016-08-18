@@ -6,8 +6,6 @@ import hashlib
 import json
 import time
 
-import dateutil
-import pandas as pd
 import pymongo
 import pytz
 import requests
@@ -125,7 +123,8 @@ def main():
         data = [r for r in data if rowhash(r) not in known]
         known.extendleft(rowhash(r) for r in data)
 
-        insert_data(collection, data)
+        if data:
+            insert_data(collection, data)
 
 
 if __name__ == '__main__':
