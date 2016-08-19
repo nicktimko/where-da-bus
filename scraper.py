@@ -101,21 +101,21 @@ def main():
     T = 10 # seconds
     Tmax = 5 * 60 # seconds
 
-    no_results = 0
+    no_result_backoff = 0
 
     known = collections.deque([], 1024)
 
     while time.monotonic() < run_til:
 
-        loop_time = min(T * (2 ** min(10, no_results)), Tmax)
+        loop_time = min(T * (2 ** min(10, no_result_backoff)), Tmax)
         time.sleep(loop_time)
 
         data = get()
 
         if len(data):
-            no_results = 0
+            no_result_backoff = 0
         else:
-            no_results += 1
+            no_result_backoff += 1
             continue
 
         data = parse(data)
